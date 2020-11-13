@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;1,700&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body,
+#root {
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+}
+
+body,
+input,
+button {
+  font: 500 1rem Roboto;
+}
+
+.container,
+.container-loading {
+  margin: 20px auto;
+  width: 100vw;
+  height: calc(100% - 50px);
+  max-width: 1110px;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 320px) {
+  .container,
+  .container-loading {
+    width: 95%;
+    height: calc(100% - 60px - 40px - 40px);
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .container,
+  .container-loading {
+    height: calc(100% - 60px - 40px - 40px);
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 1024px) {
+  .container,
+  .container-loading {
+    height: calc(100% - 80px - 40px - 40px);
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1199.98px) {
+}
