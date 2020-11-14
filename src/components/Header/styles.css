@@ -3,12 +3,21 @@
   height: 50px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  padding: 0 16px;
   background: #23231f;
+
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
-.header-logo a {
-  font-size: 1rem;
+.header-logo {
+  width: 100%;
+  text-align: center;
+}
+
+.header-logo h2 {
+  font-size: 1.2rem;
   font-weight: bold;
   color: #fff;
   text-decoration: none;
@@ -24,7 +33,7 @@
     height: 60px;
   }
   .header-logo a {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
 }
 
@@ -34,7 +43,7 @@
     height: 80px;
   }
   .header-logo a {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
   }
 }
 
