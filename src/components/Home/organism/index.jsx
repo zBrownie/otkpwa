@@ -27,12 +27,14 @@ function HomeOrganism({ data, callBack }) {
 
   return (
     <div className="container">
-      <CardHome title="Passando Hoje">
-        <FlatListAnime data={day} />
-      </CardHome>
-      <CardHome title="Season">
-        <FlatListAnime data={season} />
-      </CardHome>
+      <div className="container-home">
+        <CardHome title="Passando Hoje">
+          <FlatListAnime data={day} />
+        </CardHome>
+        <CardHome title="Season">
+          <FlatListAnime data={season} />
+        </CardHome>
+      </div>
     </div>
   );
 }

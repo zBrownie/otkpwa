@@ -4,8 +4,6 @@ import Loading from "../../components/Loading";
 
 import { getAnimes } from "../../services/firebase";
 
-import "./styles.css";
-
 function Home() {
   const [animes, setanimes] = useState([]);
   useEffect(() => {
