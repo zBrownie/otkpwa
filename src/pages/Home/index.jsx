@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import HomeOrganism from "../../components/Home/organism";
 import Loading from "../../components/Loading";
 
 import { getAnimes } from "../../services/firebase";
 
 function Home() {
+  const history = useHistory();
   const [animes, setanimes] = useState([]);
   useEffect(() => {
     getAnimes().then((resp) => {
@@ -12,7 +14,12 @@ function Home() {
     });
   }, []);
 
-  const handleClick = () => {};
+  const handleClick = (anime) => {
+    history.push({
+      pathname: "/anime",
+      state: anime,
+    });
+  };
   if (animes.length > 0) {
     return <HomeOrganism data={animes} callBack={handleClick} />;
   }

@@ -25,14 +25,22 @@ function HomeOrganism({ data, callBack }) {
     handleSeason();
   }, [handleToDay, handleSeason]);
 
+  // const handleGeolocation = async () => {
+  //   navigator.geolocation.getCurrentPosition(
+  //     (sucess) => console.log(sucess),
+  //     (error) => console.log(error),
+  //     { enableHighAccuracy: true }
+  //   );
+  // };
+
   return (
     <div className="container">
       <div className="container-home">
         <CardHome title="Passando Hoje">
-          <FlatListAnime data={day} />
+          <FlatListAnime data={day} callBack={callBack} />
         </CardHome>
         <CardHome title="Season">
-          <FlatListAnime data={season} />
+          <FlatListAnime data={season} callBack={callBack} />
         </CardHome>
       </div>
     </div>
