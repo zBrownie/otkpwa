@@ -26,6 +26,10 @@ button {
   max-width: 769px;
 }
 
+video {
+  width: 100vw;
+  height: 100vh;
+}
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 320px) {
   .container,
