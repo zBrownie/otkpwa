@@ -7,12 +7,17 @@ import { getAnimes } from "../../services/firebase";
 
 function Home() {
   const history = useHistory();
-  const [animes, setanimes] = useState([]);
-  useEffect(() => {
+  const [animes, setanimes] = useState(null);
+
+  const getData = React.useCallback(() => {
     getAnimes().then((resp) => {
       setanimes(resp);
     });
   }, []);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   const handleClick = (anime) => {
     history.push({
@@ -20,7 +25,7 @@ function Home() {
       state: anime,
     });
   };
-  if (animes.length > 0) {
+  if (animes != null) {
     return <HomeOrganism data={animes} callBack={handleClick} />;
   }
 

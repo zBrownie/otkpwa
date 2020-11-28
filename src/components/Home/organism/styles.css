@@ -16,13 +16,14 @@
 
 .anime-container img {
   width: 100%;
+  height: 100%;
   border-radius: 4px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
   transition: 0.2s;
 }
 
 .anime-container img:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .container-flat {

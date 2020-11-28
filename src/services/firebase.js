@@ -19,11 +19,26 @@ if (!firebase.apps.length) {
 
 export default firebase;
 
-export const getAnimes = async () =>
-  await firebase
+export const getAnimes = async () => {
+  const resp = await firebase
     .firestore()
     .collection("animes")
     .get()
     .then((query) =>
       query.docs.map((docs) => ({ id: docs.id, ...docs.data() }))
     );
+
+  return {
+    todos: resp,
+    today: filterAnimeDay(resp),
+    season: filterAnimeSeason(resp),
+  };
+};
+
+const filterAnimeDay = (resp) =>
+  resp.filter(
+    (anime) => anime.pos === new Date().getDay() && anime.streaming === 1
+  );
+
+const filterAnimeSeason = (resp) =>
+  resp.filter((anime) => anime.streaming === 1);
