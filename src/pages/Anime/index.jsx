@@ -5,6 +5,7 @@ import "react-html5-camera-photo/build/css/index.css";
 // import { Container } from './styles';
 
 function Anime() {
+  const [selfie, setSelfie] = React.useState(true);
   const [erroCamera, setErroCamera] = React.useState(false);
   // const { state } = useLocation();
   function handleTakePhoto(dataUri) {
@@ -24,7 +25,10 @@ function Anime() {
       ) {
         const videoStream = await navigator.mediaDevices.getUserMedia(
           {
-            video: true,
+            video: {
+              facingMode: selfie ? "user" : "environment",
+            },
+            audio: false,
           }
           // (stream) => {
           //   btnFoto.addEventListener("click", takeSnapshot);
@@ -101,9 +105,12 @@ function Anime() {
 
   return (
     <div className="container" id="mainDiv">
-      <video autoPlay id="video"></video>
+      <video muted autoPlay id="video"></video>
       <button type="button" id="tirarFoto" onClick={takeSnapshot}>
         Tirar Foto
+      </button>
+      <button type="button" onClick={() => setSelfie(!selfie)}>
+        Trocar camera
       </button>
       <canvas
         id="fotoDisplay"
