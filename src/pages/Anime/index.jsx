@@ -45,7 +45,7 @@ function Anime() {
       setErroCamera(true);
       console.error(err);
     }
-  }, []);
+  }, [selfie]);
 
   const takeSnapshot = () => {
     const element = document.getElementById("video");
