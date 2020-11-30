@@ -13,40 +13,6 @@ function Anime() {
     console.log("takePhoto");
   }
 
-  const loadCamera = React.useCallback(async () => {
-    const element = document.getElementById("video");
-    // const main = document.getElementById("mainDiv");
-    // const canvas = document.getElementById("fotoDisplay");
-    // const btnFoto = document.getElementById("tirarFoto");
-    try {
-      if (
-        "mediaDevices" in navigator &&
-        "getUserMedia" in navigator.mediaDevices
-      ) {
-        const videoStream = await navigator.mediaDevices.getUserMedia(
-          {
-            video: {
-              facingMode: selfie ? "user" : "environment",
-            },
-            audio: false,
-          }
-          // (stream) => {
-          //   btnFoto.addEventListener("click", takeSnapshot);
-          // },
-          // (err) => alert("Erro Camera", err)
-        );
-        element.srcObject = videoStream;
-        element.play();
-        setErroCamera(false);
-      } else {
-        setErroCamera(true);
-      }
-    } catch (err) {
-      setErroCamera(true);
-      console.error(err);
-    }
-  }, [selfie]);
-
   const takeSnapshot = () => {
     const element = document.getElementById("video");
     const canvas = document.getElementById("fotoDisplay");
@@ -89,8 +55,33 @@ function Anime() {
   }, []);
 
   React.useEffect(() => {
+    const loadCamera = async () => {
+      const element = document.getElementById("video");
+
+      try {
+        if (
+          "mediaDevices" in navigator &&
+          "getUserMedia" in navigator.mediaDevices
+        ) {
+          const videoStream = await navigator.mediaDevices.getUserMedia({
+            video: {
+              facingMode: selfie ? "user" : "environment",
+            },
+            audio: false,
+          });
+          element.srcObject = videoStream;
+          element.play();
+          setErroCamera(false);
+        } else {
+          setErroCamera(true);
+        }
+      } catch (err) {
+        setErroCamera(true);
+        console.error(err);
+      }
+    };
     loadCamera();
-  }, [loadCamera]);
+  }, [selfie]);
 
   if (erroCamera) {
     return (
