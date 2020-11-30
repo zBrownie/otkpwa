@@ -13,15 +13,30 @@ function Anime() {
   }
 
   const loadCamera = React.useCallback(async () => {
-    const element = document.querySelector("#video");
+    const element = document.getElementById("video");
     try {
       if (
         "mediaDevices" in navigator &&
         "getUserMedia" in navigator.mediaDevices
       ) {
-        const videoStream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-        });
+        const videoStream = await navigator.mediaDevices.getUserMedia(
+          {
+            video: true,
+          },
+          (stream) => {
+            const btnFoto = document.getElementById("tirarFoto");
+            const canvas = document.getElementById("fotoDisplay");
+
+            btnFoto.addEventListener("click", () => {
+              canvas
+                .getContext("2d")
+                .drawImage(element, 0, 0, 300, 300, 0, 0, 300, 300);
+              var img = canvas.toDataURL("image/png");
+              alert("done");
+            });
+          },
+          (err) => alert("Erro Camera", err)
+        );
         element.srcObject = videoStream;
         element.play();
         setErroCamera(false);
@@ -34,23 +49,55 @@ function Anime() {
     }
   }, []);
 
+  const handleNotificationDialog = () => {
+    var result = window.confirm(
+      "A aplicação deseja permissão de acesso a Notificação"
+    );
+
+    if (result) {
+      requestNotify();
+    } else {
+      alert("Acesso Notificação Negado.");
+    }
+  };
+
+  const requestNotify = React.useCallback(() => {
+    Notification.requestPermission(function (status) {
+      if (status === "denied") {
+        alert("Acesso Notificação Negado.");
+      } else {
+        //NOTIFICAÇÂO GRANTED
+      }
+    });
+  }, []);
+
   React.useEffect(() => {
     loadCamera();
   }, [loadCamera]);
 
+  if (erroCamera) {
+    return (
+      <div className="container">
+        <button type="button" onClick={handleNotificationDialog}>
+          Notificação
+        </button>
+        Não Possui Camera
+      </div>
+    );
+  }
+
   return (
     <div className="container">
-      {/* Anime
-      <img src={state.imgUrl} alt="" />
-      <h3>{state.title}</h3>
-      <p>{state.desc}</p> */}
       <video autoPlay id="video"></video>
-      {erroCamera ? <div>Não Possui Camera</div> : <></>}
-      {/* <Camera
-        onTakePhoto={(dataUri) => {
-          handleTakePhoto(dataUri);
-        }}
-      /> */}
+      <button type="button" id="tirarFoto">
+        Tirar Foto
+      </button>
+      <canvas
+        id="fotoDisplay"
+        style={{ display: "none" }}
+        width="300"
+        height="300"
+      ></canvas>
     </div>
   );
 }
