@@ -14,26 +14,36 @@ function Anime() {
 
   const loadCamera = React.useCallback(async () => {
     const element = document.getElementById("video");
+    const main = document.getElementById("mainDiv");
+    const canvas = document.getElementById("fotoDisplay");
+    const btnFoto = document.getElementById("tirarFoto");
     try {
       if (
         "mediaDevices" in navigator &&
         "getUserMedia" in navigator.mediaDevices
       ) {
+        function takeSnapshot() {
+          let img =
+            document.querySelector("img") || document.createElement("img");
+          let context;
+          let width = element.offsetWidth,
+            height = element.offsetHeight;
+
+          canvas.width = width;
+          canvas.height = height;
+
+          context = canvas.getContext("2d");
+          context.drawImage(element, 0, 0, width, height);
+
+          img.src = canvas.toDataURL("image/png");
+          main.appendChild(img);
+        }
         const videoStream = await navigator.mediaDevices.getUserMedia(
           {
             video: true,
           },
           (stream) => {
-            const btnFoto = document.getElementById("tirarFoto");
-            const canvas = document.getElementById("fotoDisplay");
-
-            btnFoto.addEventListener("click", () => {
-              canvas
-                .getContext("2d")
-                .drawImage(element, 0, 0, 300, 300, 0, 0, 300, 300);
-              var img = canvas.toDataURL("image/png");
-              alert("done");
-            });
+            btnFoto.addEventListener("click", takeSnapshot);
           },
           (err) => alert("Erro Camera", err)
         );
@@ -87,7 +97,7 @@ function Anime() {
   }
 
   return (
-    <div className="container">
+    <div className="container" id="mainDiv">
       <video autoPlay id="video"></video>
       <button type="button" id="tirarFoto">
         Tirar Foto
