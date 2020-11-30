@@ -14,38 +14,22 @@ function Anime() {
 
   const loadCamera = React.useCallback(async () => {
     const element = document.getElementById("video");
-    const main = document.getElementById("mainDiv");
-    const canvas = document.getElementById("fotoDisplay");
-    const btnFoto = document.getElementById("tirarFoto");
+    // const main = document.getElementById("mainDiv");
+    // const canvas = document.getElementById("fotoDisplay");
+    // const btnFoto = document.getElementById("tirarFoto");
     try {
       if (
         "mediaDevices" in navigator &&
         "getUserMedia" in navigator.mediaDevices
       ) {
-        function takeSnapshot() {
-          let img =
-            document.querySelector("img") || document.createElement("img");
-          let context;
-          let width = element.offsetWidth,
-            height = element.offsetHeight;
-
-          canvas.width = width;
-          canvas.height = height;
-
-          context = canvas.getContext("2d");
-          context.drawImage(element, 0, 0, width, height);
-
-          img.src = canvas.toDataURL("image/png");
-          main.appendChild(img);
-        }
         const videoStream = await navigator.mediaDevices.getUserMedia(
           {
             video: true,
-          },
-          (stream) => {
-            btnFoto.addEventListener("click", takeSnapshot);
-          },
-          (err) => alert("Erro Camera", err)
+          }
+          // (stream) => {
+          //   btnFoto.addEventListener("click", takeSnapshot);
+          // },
+          // (err) => alert("Erro Camera", err)
         );
         element.srcObject = videoStream;
         element.play();
@@ -58,6 +42,25 @@ function Anime() {
       console.error(err);
     }
   }, []);
+
+  const takeSnapshot = () => {
+    const element = document.getElementById("video");
+    const canvas = document.getElementById("fotoDisplay");
+
+    let img = document.createElement("img");
+    let context;
+    let width = element.offsetWidth,
+      height = element.offsetHeight;
+
+    canvas.width = width;
+    canvas.height = height;
+
+    context = canvas.getContext("2d");
+    context.drawImage(element, 0, 0, width, height);
+
+    img.src = canvas.toDataURL("image/png");
+    document.body.appendChild(img);
+  };
 
   const handleNotificationDialog = () => {
     var result = window.confirm(
@@ -99,7 +102,7 @@ function Anime() {
   return (
     <div className="container" id="mainDiv">
       <video autoPlay id="video"></video>
-      <button type="button" id="tirarFoto">
+      <button type="button" id="tirarFoto" onClick={takeSnapshot}>
         Tirar Foto
       </button>
       <canvas
